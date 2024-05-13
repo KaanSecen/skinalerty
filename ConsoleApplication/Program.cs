@@ -1,21 +1,55 @@
-﻿using BusinessLogic.User;
-using DataLogic.Services;
+﻿using System.Timers;
+using BLL.Controllers;
+using BLL.Models;
+using DAL.Services;
+using Timer = System.Timers.Timer;
 
 namespace skinalerty_console_app;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main()
     {
-        var userService = new UserService();
-        User.SetUserService(userService);
+        new Program().Test().GetAwaiter().GetResult();
+    }
 
-        // Get user by id
-        var user = new User();
+    private async Task Test()
+    {
+        var timer = new Timer(1000);
 
-        var user1 = user.GetUser(1);
+        timer.Elapsed += TickFunction;
 
-        Console.WriteLine(user1.Email);
+        timer.Start();
 
+        await Task.Delay(-1);
+
+        // var userController = new UserLogic(new UserService());
+        //
+        // // var user = new User("Kaan Secen", "kaansecen07@gmail.com", "sample12345");
+        // // //
+        // // var test = userController.SaveUser(user);
+        // //
+        // // Console.WriteLine(test.Message);
+        //
+        // var test2 = userController.Login(Console.ReadLine(), Console.ReadLine());
+        //
+        // Console.WriteLine(test2.Message);
+        //
+        //
+        //
+        // // Console.WriteLine("User created with id: " + user.Id);
+        // //
+        // // Console.WriteLine("User name: " + user.Name);
+        // // Console.WriteLine("User email: " + user.Email);
+        // // Console.WriteLine("User password: " + user.Password);
+        //
+        // // var result = userController.CheckIfUserEmailExists(user.Email);
+        // //
+        // // Console.WriteLine(result.Message);
+
+    }
+    void TickFunction(object? sender, ElapsedEventArgs args)
+    {
+        Console.WriteLine("Test");
     }
 }

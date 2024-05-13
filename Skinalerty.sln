@@ -2,11 +2,15 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication\ConsoleApplication.csproj", "{DF1F9DB6-1FF9-4FFA-BDA5-2B6165E7BA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{FB819E33-52CE-4DDA-97D6-D04ED753E750}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{FB819E33-52CE-4DDA-97D6-D04ED753E750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLogic", "DataLogic\DataLogic.csproj", "{D4E6568C-6039-4F67-B7B4-BC64DCF3330B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{D4E6568C-6039-4F67-B7B4-BC64DCF3330B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinAlertyWebApplication", "SkinAlertyWebApplication\SkinAlertyWebApplication.csproj", "{ED871394-F2F0-4FD5-BA89-5FC13F1ECAB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{ED871394-F2F0-4FD5-BA89-5FC13F1ECAB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{E1F9E478-2346-4BF8-A1F3-83AC864DE887}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{95C4AD55-D843-4E23-90C2-DF31A972AC71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +34,13 @@ Global
 		{ED871394-F2F0-4FD5-BA89-5FC13F1ECAB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED871394-F2F0-4FD5-BA89-5FC13F1ECAB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED871394-F2F0-4FD5-BA89-5FC13F1ECAB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F9E478-2346-4BF8-A1F3-83AC864DE887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F9E478-2346-4BF8-A1F3-83AC864DE887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F9E478-2346-4BF8-A1F3-83AC864DE887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F9E478-2346-4BF8-A1F3-83AC864DE887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
