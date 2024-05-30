@@ -1,0 +1,12 @@
+@model WebApp.Models.UserViewModel
+
+<form method="post" action="@Url.Action("Settings", "User")">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Email" value="@Model.Email" />
+    <input type="hidden" name="Password" value="@Model.Password" />
+    <div>
+        <label for="Name">Name:</label>
+        <input type="text" id="Name" name="Name" value="@Model.Name" required />
+    </div>
+    <input type="submit" value="Update" />
+</form>

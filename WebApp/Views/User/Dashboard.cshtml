@@ -1,0 +1,37 @@
+@model WebApp.Models.DashboardViewModel
+
+<div class="container">
+    <h1>Dashboard</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            User Details
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: @Model.User.Id</li>
+            <li class="list-group-item">Name: @Model.User.Name</li>
+            <li class="list-group-item">Email: @Model.User.Email</li>
+        </ul>
+    </div>
+
+    <h2>Notifications</h2>
+    <div class="row">
+        @foreach (var notification in Model.Notifications)
+        {
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Item ID: @notification.ItemId</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Desired Price: @notification.DesiredPrice</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Interval: @notification.IntervalSeconds Seconds</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled="disabled" @(notification.Status ? "checked" : "")>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Status
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

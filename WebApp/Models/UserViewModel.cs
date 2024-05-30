@@ -4,7 +4,7 @@ namespace WebApp.Models;
 
 public class UserViewModel
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
 
     public required string Name { get; set; }
 
@@ -14,7 +14,12 @@ public class UserViewModel
 
     public static User ConvertToUser(UserViewModel userViewModel)
     {
-        return new User(userViewModel.Name, userViewModel.Email, userViewModel.Password);
+        return new User (
+            userViewModel.Id,
+            userViewModel.Name,
+            userViewModel.Email,
+            userViewModel.Password
+        );
     }
 
     public static UserViewModel ConvertToView(User user)

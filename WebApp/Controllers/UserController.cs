@@ -4,17 +4,21 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BLL.Models;
 using System.Security.Claims;
-using BLL.Controllers;
+using BLL.Layers;
 using Newtonsoft.Json;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    public class UserController(UserLogic userService) : Controller
+    public class UserController(UserLogic userService, NotificationLogic notificationService) : Controller
     {
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Dashboard", "User");
+            }
             return View();
         }
 
@@ -27,7 +31,17 @@ namespace WebApp.Controllers
             if (result.IsSuccess)
             {
                 await Authenticate(user.Email);
-                return RedirectToAction("ProtectedPage", "User");
+
+                // Convert the returned user to a UserViewModel
+                UserViewModel userViewModel = UserViewModel.ConvertToView(result.Result!.First());
+
+                // Convert the UserViewModel to a JSON string
+                var userViewModelJson = JsonConvert.SerializeObject(userViewModel);
+
+                // Store the JSON string in the session
+                HttpContext.Session.SetString("User", userViewModelJson);
+
+                return RedirectToAction("Dashboard", "User");
             }
             ViewBag.HasError = !result.IsSuccess;
             ViewBag.ErrorMessage = result.Message!;
@@ -37,6 +51,10 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Dashboard", "User");
+            }
             return View();
         }
 
@@ -48,15 +66,13 @@ namespace WebApp.Controllers
             {
                 await Authenticate(email);
 
-                UserViewModel userViewModel = UserViewModel.ConvertToView(result.Result!);
+                UserViewModel userViewModel = UserViewModel.ConvertToView(result.Result!.First());
 
-                // Convert the UserViewModel to a JSON string
                 var userViewModelJson = JsonConvert.SerializeObject(userViewModel);
 
-                // Store the JSON string in the session
                 HttpContext.Session.SetString("User", userViewModelJson);
 
-                return RedirectToAction("ProtectedPage", "User");
+                return RedirectToAction("Dashboard", "User");
             }
             ViewBag.HasError = !result.IsSuccess;
             ViewBag.ErrorMessage = result.Message!;
@@ -64,21 +80,72 @@ namespace WebApp.Controllers
         }
 
         [Authorize]
-        public IActionResult ProtectedPage()
+        public IActionResult Dashboard()
         {
-            // Retrieve the JSON string from the session
             var userViewModelJson = HttpContext.Session.GetString("User");
 
-            // If the JSON string is null or empty, redirect to the Login view
             if (string.IsNullOrEmpty(userViewModelJson))
             {
                 return RedirectToAction("Login", "User");
             }
 
-            // Convert the JSON string back to a UserViewModel
+            UserViewModel userViewModel = JsonConvert.DeserializeObject<UserViewModel>(userViewModelJson)!;
+
+            var notifications = notificationService.GetAllNotificationsFromUser(userViewModel.Id);
+
+            var notificationViewModels = notifications.Result.Select(NotificationViewModel.ConvertToView).ToList();
+
+            var dashboardViewModel = new DashboardViewModel
+            {
+                User = userViewModel,
+                Notifications = notificationViewModels
+            };
+
+            return View(dashboardViewModel);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            var userViewModelJson = HttpContext.Session.GetString("User");
+
+            if (string.IsNullOrEmpty(userViewModelJson))
+            {
+                return RedirectToAction("Login", "User");
+            }
+
             UserViewModel userViewModel = JsonConvert.DeserializeObject<UserViewModel>(userViewModelJson)!;
 
             return View(userViewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Settings(UserViewModel userViewModel)
+        {
+            User user = UserViewModel.ConvertToUser(userViewModel);
+            var result = userService.UpdateUser(user);
+            if (result.IsSuccess)
+            {
+                // Convert the UserViewModel to a JSON string
+                var userViewModelJson = JsonConvert.SerializeObject(userViewModel);
+
+                // Store the JSON string in the session
+                HttpContext.Session.SetString("User", userViewModelJson);
+
+                return RedirectToAction("Dashboard", "User");
+            }
+            ViewBag.HasError = !result.IsSuccess;
+            ViewBag.ErrorMessage = result.Message!;
+            return View(userViewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "User");
         }
 
         private async Task Authenticate(string userName)

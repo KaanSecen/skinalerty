@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{95C4AD55-D843-4E23-90C2-DF31A972AC71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi", "SteamApi\SteamApi.csproj", "{B1F987CA-0198-4FB5-8D0C-611E707C5F75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95C4AD55-D843-4E23-90C2-DF31A972AC71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F987CA-0198-4FB5-8D0C-611E707C5F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F987CA-0198-4FB5-8D0C-611E707C5F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F987CA-0198-4FB5-8D0C-611E707C5F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F987CA-0198-4FB5-8D0C-611E707C5F75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

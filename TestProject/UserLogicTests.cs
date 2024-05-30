@@ -1,5 +1,5 @@
 using Moq;
-using BLL.Controllers;
+using BLL.Layers;
 using BLL.Interfaces;
 using BLL.Models;
 
@@ -22,7 +22,8 @@ public class UserLogicTests
     {
         // Arrange
         _mockUserService.Setup(x => x.GetUser(It.IsAny<string>()))
-            .Returns(new User("Test", "sample@gmail.com", "sample123"));
+            .Returns(new User
+            (1, "Test User", "sample@gmail.com", "sample123"));
 
         // Act
         var result = _userLogic.CheckIfUserEmailExists(email: "sample@gmail.com");
@@ -35,7 +36,8 @@ public class UserLogicTests
     public void SaveUser_WhenPasswordIsShort_ReturnsFailure()
     {
         // Arrange
-        var testUser = new User("Test User", "sample@gmail.com", "123");
+        var testUser = new User
+            (1, "Test User", "sample@gmail.com", "short");
 
         // Act
         var result = _userLogic.SaveUser(testUser);
@@ -48,7 +50,7 @@ public class UserLogicTests
     public void SaveUser_WhenPasswordIsLong_ReturnsSuccess()
     {
         // Arrange
-        User testUser = new User("Test User", "sample@gmail.com", "sample123");
+        User testUser = new User(1, "Test User", "sample@gmail.com", "sample123");
 
         // Act
         var result = _userLogic.SaveUser(testUser);
@@ -61,7 +63,7 @@ public class UserLogicTests
     public void Login_WhenCredentialsAreValid_ReturnsSuccess()
     {
         // Arrange
-        _mockUserService.Setup(x => x.GetUser(It.IsAny<string>())).Returns(new User("Test", "sample@gmail.com",
+        _mockUserService.Setup(x => x.GetUser(It.IsAny<string>())).Returns(new User(1, "Test User", "sample@gmail.com",
             BCrypt.Net.BCrypt.HashPassword("sample123")));
 
         // Act

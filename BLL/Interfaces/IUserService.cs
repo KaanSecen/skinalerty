@@ -8,5 +8,6 @@ public interface IUserService
     User? GetUser(string email);
 
     User SaveUser(User user);
+    User UpdateUser(User user);
     User Login(string email, string password);
 }

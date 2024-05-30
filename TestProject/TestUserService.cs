@@ -5,7 +5,8 @@ namespace TestProject;
 
 public class TestUserService : IUserService
 {
-    private readonly User _user = new User("Test", "sample@gmail.com", BCrypt.Net.BCrypt.HashPassword("sample123"));
+    private readonly User _user = new(1, "Test User", "sample@gmail.com",
+        BCrypt.Net.BCrypt.HashPassword("sample123"));
 
     public User GetUser(int id)
     {
@@ -23,6 +24,11 @@ public class TestUserService : IUserService
     }
 
     public User Login(string email, string password)
+    {
+        return _user;
+    }
+
+    public User UpdateUser(User user)
     {
         return _user;
     }

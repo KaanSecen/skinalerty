@@ -1,23 +1,15 @@
 namespace BLL.Models
 {
-    public class User
+    public class User(int id, string name, string email, string password) : Domain.Entities.User(id, name, email, password)
     {
-        public User(string name, string email, string password, int id = 0)
-        {
-            Id = id;
-            Name = name;
-            Email = email;
-            Password = password;
-        }
-
-        public int Id { get; private set; }
-        public string Name { get;  private set; }
-        public string Email { get;  private set; }
-        public string Password { get;  private set; }
-
         public bool IsPasswordLengthValid()
         {
             return Password.Length >= 8;
+        }
+
+        public bool IsEmailFormatValid()
+        {
+            return new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(Email);
         }
 
         public void HashPassword()

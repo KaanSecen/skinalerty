@@ -1,5 +1,5 @@
-using BLL.Controllers;
 using BLL.Interfaces;
+using BLL.Layers;
 using DAL.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -8,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<UserLogic>();
-builder.Services.AddDistributedMemoryCache(); // Add this line
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<NotificationLogic>();
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);

@@ -1,27 +1,20 @@
 using BLL.Interfaces;
 using BLL.Models;
 
-namespace BLL.Controllers;
+namespace BLL.Layers;
 
-public class UserLogic
+public class UserLogic(IUserService userService)
 {
-    private IUserService _userService;
-
-    public UserLogic(IUserService userService)
-    {
-        _userService = userService;
-    }
-
     public User GetUser(int id)
     {
-        return _userService.GetUser(id);
+        return userService.GetUser(id);
     }
 
     public ValidationResult<User> SaveUser(User user)
     {
         ValidationResult<User> userValidationResult = new ValidationResult<User>
         {
-            Result = user
+            Result = [user]
         };
 
         if(user.IsPasswordLengthValid())
@@ -29,7 +22,7 @@ public class UserLogic
             user.HashPassword();
             if (!CheckIfUserEmailExists(user.Email).IsSuccess)
             {
-                _userService.SaveUser(user);
+                userValidationResult.Result = [userService.SaveUser(user)];
                 userValidationResult.IsSuccess = true;
                 userValidationResult.Message = "User created successfully!";
                 return userValidationResult;
@@ -48,7 +41,26 @@ public class UserLogic
 
     public void SetUserService(IUserService userServices)
     {
-        _userService = userServices;
+        userService = userServices;
+    }
+
+    public ValidationResult<User> UpdateUser(User user)
+    {
+        ValidationResult<User> userValidationResult = new ValidationResult<User>
+        {
+            Result = [user]
+        };
+
+        if (user.IsPasswordLengthValid())
+        {
+            user.HashPassword();
+            userService.UpdateUser(user);
+            userValidationResult.IsSuccess = true;
+            userValidationResult.Message = "User updated successfully!";
+            return userValidationResult;
+        }
+
+        return userValidationResult;
     }
 
     public ValidationResult<User> Login(string email, string password)
@@ -59,9 +71,9 @@ public class UserLogic
 
         if (user.IsSuccess)
         {
-            if (user.Result != null && user.Result.VerifyPassword(password))
+            if (user.Result != null && user.Result.First().VerifyPassword(password))
             {
-                _userService.Login(email, password);
+                userService.Login(email, password);
                 userValidationResult.Message = "User logged in successfully!";
                 userValidationResult.IsSuccess = true;
                 userValidationResult.Result = user.Result;
@@ -81,12 +93,12 @@ public class UserLogic
     public ValidationResult<User> CheckIfUserEmailExists(string email)
     {
         ValidationResult<User> userValidationResult = new ValidationResult<User>();
-        var databaseUser = _userService.GetUser(email);
+        var databaseUser = userService.GetUser(email);
 
         if (databaseUser != null)
         {
             userValidationResult.Message = "Email already exists!";
-            userValidationResult.Result = databaseUser;
+            userValidationResult.Result = [databaseUser];
             userValidationResult.IsSuccess =  true;
         }
         else
