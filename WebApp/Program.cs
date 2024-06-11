@@ -10,6 +10,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<UserLogic>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<NotificationLogic>();
+builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<ItemLogic>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {

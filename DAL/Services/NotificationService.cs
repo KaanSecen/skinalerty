@@ -100,4 +100,32 @@ public class NotificationService : INotificationService
         );
         return notification;
     }
+
+    public Notification UpdateNotification(Notification notification)
+    {
+        var parameters = new[]
+        {
+            new MySqlParameter("@id", notification.Id),
+            new MySqlParameter("@user_id", notification.UserId),
+            new MySqlParameter("@item_id", notification.ItemId),
+            new MySqlParameter("@desired_price", notification.DesiredPrice),
+            new MySqlParameter("@interval_seconds", notification.IntervalSeconds),
+            new MySqlParameter("@status", notification.Status)
+        };
+
+        var data = Logic.ExecuteQuery("UPDATE skinalerty_notification SET user_id = @user_id, item_id = @item_id, desired_price = @desired_price, interval_seconds = @interval_seconds, status = @status WHERE id = @id", parameters);
+        if (data.Count == 0) return null;
+
+        notification = new Notification
+        (
+            notification.Id,
+            notification.UserId,
+            notification.ItemId,
+            notification.DesiredPrice,
+            notification.IntervalSeconds,
+            notification.Status
+        );
+
+        return notification;
+    }
 }

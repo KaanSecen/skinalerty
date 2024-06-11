@@ -1,6 +1,6 @@
 @model WebApp.Models.NotificationViewModel
 
-<h1>Create Notification</h1>
+<h1>Update Notification</h1>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
@@ -26,7 +26,7 @@
     @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-check-input" } })
 </div>
 
-<input type="submit" value="Create" class="btn btn-primary" />
+<input type="submit" value="Update" class="btn btn-primary" />
 }
 
 @if (ViewBag.HasError == true)

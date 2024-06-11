@@ -4,7 +4,7 @@
 	<s:Boolean x:Key="/Default/Environment/Hierarchy/Build/BuildTool/RecentBuildToolPaths/=_002Fusr_002Flocal_002Fshare_002Fdotnet_002Fsdk_002F8_002E0_002E203_002FMSBuild_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b408855e_002D03bc_002D43c8_002Da996_002Dc6ddd7b9a16a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CheckIfUserHasEmail #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::E1F9E478-2346-4BF8-A1F3-83AC864DE887::net8.0::TestProject.UserControllerTests&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::E1F9E478-2346-4BF8-A1F3-83AC864DE887::net8.0::TestProject.UserLogicTests.Register_InvalidEmail_ReturnsFailure&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	

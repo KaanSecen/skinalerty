@@ -17,6 +17,13 @@ public class UserLogic(IUserService userService)
             Result = [user]
         };
 
+        if (!user.IsEmailFormatValid())
+        {
+            userValidationResult.IsSuccess = false;
+            userValidationResult.Message = "Email format is not valid!";
+            return userValidationResult;
+        }
+
         if(user.IsPasswordLengthValid())
         {
             user.HashPassword();

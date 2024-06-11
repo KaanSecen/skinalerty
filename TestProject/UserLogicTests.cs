@@ -72,4 +72,18 @@ public class UserLogicTests
         // Assert
         Assert.IsTrue(result.IsSuccess, result.Message);
     }
+
+    [Test]
+    public void Register_InvalidEmail_ReturnsFailure()
+    {
+        // Arrange
+        User testUser = new User(1, "Test User", "sample%gmail.com", "sample123");
+
+        // Act
+        var result = _userLogic.SaveUser(testUser);
+
+        // Assert
+        Assert.IsFalse(result.IsSuccess);
+        Assert.That(result.Message, Is.EqualTo("Email format is not valid!"));
+    }
 }

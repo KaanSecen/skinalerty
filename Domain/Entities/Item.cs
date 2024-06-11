@@ -1,19 +1,18 @@
 namespace Domain.Entities;
 
-public class Item
+public class Item(int id, int csId, string name, string exterior, string imageUrl, string steamUrl, decimal price)
 {
-    public int Id { get; init; }
+    public int Id { get; init; } = id;
 
-    public int CsId { get; init; }
+    public int CsId { get; init; } = csId;
 
-    public required string Name { get; set; }
+    public string Name { get; set; } = name;
 
-    public required string Exterior { get; set; }
+    public string Exterior { get; set; } = exterior;
 
-    public required string ImageUrl { get; set; }
+    public string ImageUrl { get; set; } = imageUrl;
 
-    public required string SteamUrl { get; set; }
-
-    public required string Price { get; set; }
+    public string SteamUrl { get; set; } = steamUrl;
+    public decimal Price { get; set; } = price;
 
 }

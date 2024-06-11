@@ -2,6 +2,8 @@
 using BLL.Layers;
 using BLL.Models;
 using DAL.Services;
+using SteamApi;
+using Spectre.Console;
 using Timer = System.Timers.Timer;
 
 namespace skinalerty_console_app;
@@ -37,19 +39,44 @@ internal class Program
         // Console.WriteLine(test2.Message);
 
 
-        Console.WriteLine("User created with id: " + user.Id);
+        // Console.WriteLine("User created with id: " + user.Id);
+        //
+        // Console.WriteLine("User name: " + user.Name);
+        // Console.WriteLine("User email: " + user.Email);
+        // Console.WriteLine("User password: " + user.Password);
+        //
+        // var test3 = notificationController.GetAllNotificationsFromUser(77);
+        //
+        // var test4 = notificationController.SaveNotification(new Notification(2, 1, 1, 1, 1, true));
+        //
+        // var result = userController.CheckIfUserEmailExists(user.Email);
+        //
+        // Console.WriteLine(result.Message);
 
-        Console.WriteLine("User name: " + user.Name);
-        Console.WriteLine("User email: " + user.Email);
-        Console.WriteLine("User password: " + user.Password);
+        var itemLogic = new ItemLogic(new ItemService());
+        var steamService = new SteamHttpClientService(itemLogic);
 
-        var test3 = notificationController.GetAllNotificationsFromUser(77);
+        var savedItems = await steamService.FetchAndSaveItems();
 
-        var test4 = notificationController.SaveNotification(new Notification(2, 1, 1, 1, 1, true));
+        foreach (var itemSaved in savedItems)
+        {
+            AnsiConsole.Status()
+                .Start(itemSaved.Message!, ctx =>
+                {
+                    // Simulate some work
+                    AnsiConsole.MarkupLine("Doing some work...");
+                    Thread.Sleep(1000);
 
-        var result = userController.CheckIfUserEmailExists(user.Email);
+                    // Update the status and spinner
+                    ctx.Status(itemSaved.Message!);
+                    ctx.Spinner(Spinner.Known.Star);
+                    ctx.SpinnerStyle(Style.Parse("green"));
 
-        Console.WriteLine(result.Message);
+                    // Simulate some work
+                    AnsiConsole.MarkupLine("Doing some more work...");
+                    Thread.Sleep(2000);
+                });
+        }
 
     }
     void TickFunction(object? sender, ElapsedEventArgs args)

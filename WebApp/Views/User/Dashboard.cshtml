@@ -7,28 +7,29 @@
             User Details
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">ID: @Model.User.Id</li>
-            <li class="list-group-item">Name: @Model.User.Name</li>
-            <li class="list-group-item">Email: @Model.User.Email</li>
+            <li class="list-group-item">ID: @Html.DisplayFor(model => model.User.Id)</li>
+            <li class="list-group-item">Name: @Html.DisplayFor(model => model.User.Name)</li>
+            <li class="list-group-item">Email: @Html.DisplayFor(model => model.User.Email)</li>
         </ul>
     </div>
 
-    <h2>Notifications</h2>
+    <h2>Notifications  <a href="@Url.Action("Create", "Notification")" class="btn btn-primary">Create</a></h2>
     <div class="row">
-        @foreach (var notification in Model.Notifications)
+        @foreach (var notification in Model.Notifications.OrderByDescending(n => n.Id))
         {
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">Item ID: @notification.ItemId</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Desired Price: @notification.DesiredPrice</h6>
-                        <h6 class="card-subtitle mb-2 text-muted">Interval: @notification.IntervalSeconds Seconds</h6>
+                        <h5 class="card-title">Item ID: @Html.DisplayFor(model => notification.ItemId)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Desired Price: @Html.DisplayFor(model => notification.DesiredPrice)</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Interval: @Html.DisplayFor(model => notification.IntervalSeconds) Seconds</h6>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled="disabled" @(notification.Status ? "checked" : "")>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Status
                             </label>
                         </div>
+                        @Html.ActionLink("Update", "Update", "Notification", new { id = notification.Id }, new { @class = "btn btn-primary" })
                     </div>
                 </div>
             </div>
